@@ -52,6 +52,29 @@
   box-shadow: 0 24px 70px rgb(82 35 48 / 24%);
 }
 
+:host ::ng-deep .delete-dialog {
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgb(82 35 48 / 24%);
+}
+
+:host ::ng-deep .delete-dialog .p-dialog-header {
+  padding: 22px 22px 8px;
+  background: #ffffff;
+  color: #3f3f3f;
+}
+
+:host ::ng-deep .delete-dialog .p-dialog-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .delete-dialog .p-dialog-content {
+  padding: 12px 22px 22px;
+  background: #ffffff;
+}
+
 :host ::ng-deep .appointment-dialog .p-dialog-header {
   padding: 24px 24px 8px;
   background: #ffffff;
@@ -212,7 +235,8 @@
 }
 
 .primary-button,
-.secondary-button {
+.secondary-button,
+.danger-button {
   min-height: 46px;
   padding: 8px 14px;
   border: 0;
@@ -224,17 +248,66 @@
   cursor: pointer;
 }
 
+.danger-button {
+  background: linear-gradient(90deg, #d93f68 0%, #ed667d 100%);
+}
+
+.primary-button:disabled,
+.secondary-button:disabled,
+.danger-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
 .primary-button:hover,
 .primary-button:focus-visible,
 .secondary-button:hover,
-.secondary-button:focus-visible {
+.secondary-button:focus-visible,
+.danger-button:hover,
+.danger-button:focus-visible {
   filter: brightness(0.97);
   outline: none;
 }
 
 .primary-button:active,
-.secondary-button:active {
+.secondary-button:active,
+.danger-button:active {
   transform: scale(0.98);
+}
+
+.delete-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.delete-confirmation p {
+  margin: 0;
+  color: #555057;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.delete-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffeaee;
+  color: #d93f68;
+  font-size: 1.1rem;
+}
+
+.delete-error {
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.delete-actions {
+  margin-top: 20px;
 }
 
 @media (max-width: 480px) {
@@ -243,6 +316,14 @@
   }
 
   :host ::ng-deep .appointment-dialog .p-dialog-content {
+    padding: 12px 20px 20px;
+  }
+
+  :host ::ng-deep .delete-dialog .p-dialog-header {
+    padding: 20px 20px 8px;
+  }
+
+  :host ::ng-deep .delete-dialog .p-dialog-content {
     padding: 12px 20px 20px;
   }
 

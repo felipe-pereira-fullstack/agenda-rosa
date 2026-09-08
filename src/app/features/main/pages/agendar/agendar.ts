@@ -37,6 +37,9 @@ export class AgendarComponent implements OnInit {
   agendamentosDoDia: any[] = [];
   servicosDisponiveis: Servico[] = [];
   carregandoServicos = true;
+  agendamentoParaExcluir: any | null = null;
+  excluindoAgendamento = false;
+  erroExclusao = '';
   
   // Guarda o ID do agendamento sendo editado (null = criando novo)
   idAgendamentoEmEdicao: string | null = null;
@@ -267,20 +270,48 @@ export class AgendarComponent implements OnInit {
     this.novoAgendamento = { nome: '', hora: '', servicoId: '' };
   }
 
-  // Deleta do Banco de Dados
-  async removerDaLista(agendamento: any) {
-    const confirmar = confirm(`Deseja realmente deletar o agendamento de ${agendamento.nome}?`);
-    
-    if(confirmar && agendamento.id_firebase) {
-      try {
-        // Deleta o documento exato no Firebase usando o ID único dele
-        await deleteDoc(doc(this.firestore, 'agendamentos', agendamento.id_firebase));
-        
-        // Recarrega a lista
-        await this.buscarAgendamentosDaRota();
-      } catch (error) {
-        console.error("Erro ao deletar: ", error);
-      }
+  removerDaLista(agendamento: any): void {
+    this.erroExclusao = '';
+    this.agendamentoParaExcluir = agendamento;
+  }
+
+  cancelarExclusao(): void {
+    if (this.excluindoAgendamento) {
+      return;
+    }
+
+    this.agendamentoParaExcluir = null;
+    this.erroExclusao = '';
+  }
+
+  aoAlterarVisibilidadeExclusao(visible: boolean): void {
+    if (!visible) {
+      this.cancelarExclusao();
+    }
+  }
+
+  async confirmarExclusao(): Promise<void> {
+    const agendamento = this.agendamentoParaExcluir;
+
+    if (!agendamento?.id_firebase || this.excluindoAgendamento) {
+      return;
+    }
+
+    this.excluindoAgendamento = true;
+    this.erroExclusao = '';
+
+    try {
+      await deleteDoc(
+        doc(this.firestore, 'agendamentos', agendamento.id_firebase)
+      );
+      this.agendamentoParaExcluir = null;
+      await this.buscarAgendamentosDaRota();
+    } catch (error) {
+      console.error('Erro ao excluir agendamento:', error);
+      this.erroExclusao = 'Não foi possível excluir. Tente novamente.';
+    } finally {
+      this.excluindoAgendamento = false;
+      this.cdr.detectChanges();
     }
   }
 }

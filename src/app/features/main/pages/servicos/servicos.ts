@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from '../../../../shared/components/footer/footer';
 import { HeaderComponent } from '../../../../shared/components/header/header';
 import { ServicosModalComponent } from '../../components/servicos-modal/servicos-modal';
@@ -10,7 +11,13 @@ import { ServicosService } from '../../services/servicos.service';
 @Component({
   selector: 'app-servicos',
   standalone: true,
-  imports: [CurrencyPipe, FooterComponent, HeaderComponent, ServicosModalComponent],
+  imports: [
+    CurrencyPipe,
+    DialogModule,
+    FooterComponent,
+    HeaderComponent,
+    ServicosModalComponent
+  ],
   templateUrl: './servicos.html',
   styleUrl: './servicos.css'
 })
@@ -24,6 +31,9 @@ export class ServicosComponent implements OnInit {
   carregandoServicos = true;
   mensagemErro = '';
   servicos: Servico[] = [];
+  servicoParaExcluir: Servico | null = null;
+  excluindoServico = false;
+  erroExclusao = '';
   private idUsuarioLogado = '';
 
   ngOnInit(): void {
@@ -78,6 +88,49 @@ export class ServicosComponent implements OnInit {
       this.mensagemErro = 'Não foi possível salvar o serviço. Tente novamente.';
     } finally {
       this.salvandoServico = false;
+      this.cdr.detectChanges();
+    }
+  }
+
+  abrirConfirmacaoExclusao(servico: Servico): void {
+    this.erroExclusao = '';
+    this.servicoParaExcluir = servico;
+  }
+
+  cancelarExclusao(): void {
+    if (this.excluindoServico) {
+      return;
+    }
+
+    this.servicoParaExcluir = null;
+    this.erroExclusao = '';
+  }
+
+  aoAlterarVisibilidadeExclusao(visible: boolean): void {
+    if (!visible) {
+      this.cancelarExclusao();
+    }
+  }
+
+  async confirmarExclusao(): Promise<void> {
+    const servico = this.servicoParaExcluir;
+
+    if (!servico || this.excluindoServico) {
+      return;
+    }
+
+    this.excluindoServico = true;
+    this.erroExclusao = '';
+
+    try {
+      await this.servicosService.desativar(servico.id);
+      this.servicos = this.servicos.filter(item => item.id !== servico.id);
+      this.servicoParaExcluir = null;
+    } catch (error) {
+      console.error('Erro ao desativar serviço:', error);
+      this.erroExclusao = 'Não foi possível excluir o serviço. Tente novamente.';
+    } finally {
+      this.excluindoServico = false;
       this.cdr.detectChanges();
     }
   }

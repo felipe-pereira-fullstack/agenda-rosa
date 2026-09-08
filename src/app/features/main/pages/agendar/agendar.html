@@ -115,3 +115,50 @@
     </div>
   </form>
 </p-dialog>
+
+<p-dialog
+  header="Excluir agendamento"
+  [visible]="!!agendamentoParaExcluir"
+  (visibleChange)="aoAlterarVisibilidadeExclusao($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!excluindoAgendamento"
+  [closeOnEscape]="!excluindoAgendamento"
+  [dismissableMask]="!excluindoAgendamento"
+  [style]="{ width: 'min(360px, calc(100vw - 40px))' }"
+  styleClass="delete-dialog"
+>
+  <div class="delete-confirmation">
+    <span class="delete-icon" aria-hidden="true">
+      <i class="pi pi-trash"></i>
+    </span>
+    <p>
+      Deseja excluir o agendamento de
+      <strong>{{ agendamentoParaExcluir?.nome }}</strong>?
+    </p>
+  </div>
+
+  @if (erroExclusao) {
+    <p class="delete-error" role="alert">{{ erroExclusao }}</p>
+  }
+
+  <div class="dialog-actions delete-actions">
+    <button
+      class="danger-button"
+      type="button"
+      [disabled]="excluindoAgendamento"
+      (click)="confirmarExclusao()"
+    >
+      {{ excluindoAgendamento ? 'Excluindo...' : 'Excluir' }}
+    </button>
+    <button
+      class="secondary-button"
+      type="button"
+      [disabled]="excluindoAgendamento"
+      (click)="cancelarExclusao()"
+    >
+      Cancelar
+    </button>
+  </div>
+</p-dialog>

@@ -22,7 +22,7 @@
   .main-content {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 8px;
     min-height: calc(100dvh - 60px);
     padding: 22px 0 92px;
     background: linear-gradient(180deg, #fff7f8 0%, #ffffff 42%);
@@ -40,6 +40,6 @@
   }
 
   .section-title span {
-    color: #f78184;
+    color: #3f3f3f;
   }
 }

@@ -4,9 +4,11 @@ import {
   Timestamp,
   addDoc,
   collection,
+  doc,
   getDocs,
   query,
   serverTimestamp,
+  updateDoc,
   where
 } from '@angular/fire/firestore';
 import { NovoServico, Servico } from '../models/servico.model';
@@ -62,5 +64,12 @@ export class ServicosService {
       ...novoServico,
       ativo: true
     };
+  }
+
+  async desativar(idServico: string): Promise<void> {
+    await updateDoc(doc(this.firestore, 'servicos', idServico), {
+      ativo: false,
+      atualizadoEm: serverTimestamp()
+    });
   }
 }

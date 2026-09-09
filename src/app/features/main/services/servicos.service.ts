@@ -18,6 +18,11 @@ export class ServicosService {
   private readonly firestore = inject(Firestore);
 
   async listarAtivos(idUsuario: string): Promise<Servico[]> {
+    const servicos = await this.listarTodos(idUsuario);
+    return servicos.filter(servico => servico.ativo);
+  }
+
+  async listarTodos(idUsuario: string): Promise<Servico[]> {
     const servicosRef = collection(this.firestore, 'servicos');
     const consulta = query(servicosRef, where('id_usuario', '==', idUsuario));
     const resultado = await getDocs(consulta);
@@ -40,7 +45,6 @@ export class ServicosService {
             : undefined
         };
       })
-      .filter(servico => servico.ativo)
       .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   }
 

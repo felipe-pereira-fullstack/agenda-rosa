@@ -227,6 +227,12 @@
   font-size: 0.88rem;
 }
 
+.field-error {
+  margin: 7px 4px 0;
+  color: #b42318;
+  font-size: 0.88rem;
+}
+
 .dialog-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

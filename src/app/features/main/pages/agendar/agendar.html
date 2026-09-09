@@ -70,11 +70,18 @@
           name="horario"
           placeholder=" "
           inputmode="numeric"
+          maxlength="5"
           autocomplete="off"
-          [(ngModel)]="novoAgendamento.hora"
+          [value]="novoAgendamento.hora"
+          (keydown)="bloquearTeclaHorario($event)"
+          (input)="aoDigitarHorario($event)"
+          (blur)="normalizarHorario(false)"
         />
         <label for="horario-agendamento">Horário</label>
       </div>
+      @if (erroHorario) {
+        <p class="field-error" role="alert">{{ erroHorario }}</p>
+      }
     </div>
 
     <div class="field">

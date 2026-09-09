@@ -1,7 +1,146 @@
 <app-header titulo="Dashboard"></app-header>
 
 <main class="main-content">
-  <h2 class="section-title">Visão geral</h2>
+  <div class="dashboard-heading">
+    <div>
+      <h2 class="section-title">Resumo financeiro</h2>
+      <p>{{ descricaoPeriodo }}</p>
+    </div>
+
+    <div class="period-filter" aria-label="Período do dashboard">
+      @for (periodo of periodos; track periodo.valor) {
+        <button
+          type="button"
+          [class.active]="periodoSelecionado === periodo.valor"
+          [attr.aria-pressed]="periodoSelecionado === periodo.valor"
+          (click)="selecionarPeriodo(periodo.valor)"
+        >
+          {{ periodo.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (carregando) {
+    <div class="dashboard-state" role="status">
+      <i class="pi pi-spinner loading-spinner" aria-hidden="true"></i>
+      <span>Carregando indicadores...</span>
+    </div>
+  } @else if (mensagemErro) {
+    <div class="dashboard-state dashboard-state--error" role="alert">
+      <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+      <span>{{ mensagemErro }}</span>
+    </div>
+  } @else {
+    <section class="summary-grid" aria-label="Resumo do período">
+      <article class="summary-card summary-card--revenue">
+        <span class="summary-icon"><i class="pi pi-wallet"></i></span>
+        <div>
+          <span class="summary-label">Faturamento do período</span>
+          <strong>
+            {{ totalFaturadoCentavos / 100 | currency: 'BRL' }}
+          </strong>
+        </div>
+      </article>
+
+      <article class="summary-card">
+        <span class="summary-icon"><i class="pi pi-list-check"></i></span>
+        <div>
+          <span class="summary-label">Serviços realizados</span>
+          <strong>{{ totalAtendimentos }}</strong>
+        </div>
+      </article>
+    </section>
+
+    @if (agendamentosSemValor > 0) {
+      <p class="legacy-warning">
+        <i class="pi pi-info-circle" aria-hidden="true"></i>
+        {{ agendamentosSemValor }}
+        {{ agendamentosSemValor === 1 ? 'agendamento antigo não possui' : 'agendamentos antigos não possuem' }}
+        valor salvo e não entrou no faturamento.
+      </p>
+    }
+
+    @if (resumoServicos.length === 0) {
+      <div class="empty-dashboard" role="status">
+        <i class="pi pi-chart-bar" aria-hidden="true"></i>
+        <p>Não há agendamentos neste período.</p>
+        <span>Escolha outro período para consultar.</span>
+      </div>
+    } @else {
+      <div class="charts-grid">
+        <section class="chart-card">
+          <div class="chart-heading">
+            <span class="chart-heading-icon">
+              <i class="pi pi-chart-bar" aria-hidden="true"></i>
+            </span>
+            <div>
+              <h3>Quantidade por serviço</h3>
+              <p>Total realizado no período</p>
+            </div>
+          </div>
+
+          <div class="bar-chart">
+            @for (servico of resumoServicos; track servico.chave) {
+              <div class="bar-item">
+                <div class="bar-label">
+                  <span class="bar-service-name">
+                    <span>{{ servico.nome }}</span>
+                    @if (!servico.ativo) {
+                      <small class="inactive-badge">Inativo</small>
+                    }
+                  </span>
+                  <strong>{{ servico.quantidade }}</strong>
+                </div>
+                <div class="bar-track" aria-hidden="true">
+                  <span
+                    class="bar-fill bar-fill--quantity"
+                    [style.width.%]="servico.percentualQuantidade"
+                  ></span>
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+
+        <section class="chart-card">
+          <div class="chart-heading">
+            <span class="chart-heading-icon">
+              <i class="pi pi-wallet" aria-hidden="true"></i>
+            </span>
+            <div>
+              <h3>Faturamento por serviço</h3>
+              <p>Total de cada serviço</p>
+            </div>
+          </div>
+
+          <div class="bar-chart">
+            @for (servico of resumoServicos; track servico.chave) {
+              <div class="bar-item">
+                <div class="bar-label">
+                  <span class="bar-service-name">
+                    <span>{{ servico.nome }}</span>
+                    @if (!servico.ativo) {
+                      <small class="inactive-badge">Inativo</small>
+                    }
+                  </span>
+                  <strong>
+                    {{ servico.totalCentavos / 100 | currency: 'BRL' }}
+                  </strong>
+                </div>
+                <div class="bar-track" aria-hidden="true">
+                  <span
+                    class="bar-fill bar-fill--revenue"
+                    [style.width.%]="servico.percentualFaturamento"
+                  ></span>
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+    }
+  }
 </main>
 
 <app-footer></app-footer>

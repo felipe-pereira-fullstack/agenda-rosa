@@ -9,8 +9,9 @@
 
 .section-title {
   color: #3f3f3f;
-  font-size: 1.6rem;
-  font-weight: 500;
+  font-family: 'Crimson Text', serif;
+    font-size: 1.6rem;
+  font-weight: 600;
   margin: 0 16px 10px;
 }
 

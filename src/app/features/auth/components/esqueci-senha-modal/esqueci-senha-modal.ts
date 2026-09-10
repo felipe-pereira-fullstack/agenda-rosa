@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  inject
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 
@@ -25,6 +32,7 @@ import { InputTextModule } from 'primeng/inputtext';
 export class EsqueciSenhaModalComponent {
   private readonly auth = inject(Auth);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   @Input() visible = false;
   @Output() readonly visibleChange = new EventEmitter<boolean>();
@@ -69,6 +77,7 @@ export class EsqueciSenhaModalComponent {
       }
     } finally {
       this.loading = false;
+      this.cdr.detectChanges();
     }
   }
 

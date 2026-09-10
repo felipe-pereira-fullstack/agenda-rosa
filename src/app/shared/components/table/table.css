@@ -68,6 +68,14 @@
   text-align: center !important;
 }
 
+:host ::ng-deep .custom-agenda-table .p-datatable-tbody > tr > td:nth-child(1),
+:host ::ng-deep .custom-agenda-table .p-datatable-tbody > tr > td:nth-child(3) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.25;
+}
+
 /* --- LINHAS ZEBRADAS (Listradas) --- */
 
 /* Linha escura (Rosa mais forte) */
@@ -87,7 +95,9 @@
 }
 
 :host ::ng-deep .custom-agenda-table .acoes-cell {
+  overflow: hidden;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .acoes-content {

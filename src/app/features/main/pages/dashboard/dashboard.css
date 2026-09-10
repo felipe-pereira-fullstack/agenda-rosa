@@ -17,8 +17,10 @@
 .section-title {
   margin: 0;
   color: #3f3f3f;
-  font-size: 1.6rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
   font-weight: 600;
+  letter-spacing: 0;
 }
 
 .dashboard-heading p {
@@ -325,7 +327,7 @@
   }
 
   .section-title {
-    font-size: 1.45rem;
+    font-size: 20px;
   }
 
   .period-filter button {

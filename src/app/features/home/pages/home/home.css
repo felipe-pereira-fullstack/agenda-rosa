@@ -1,23 +1,47 @@
 /* Container que preenche o espaço entre o Header e o Footer */
 .main-content {
   background-color: #ffffff;
-  min-height: 100vh; /* Garante que a tela inteira fique branca mesmo se não tiver conteúdo */
-  padding-top: 20px; /* Dá um espacinho do Header para o Título */
-  padding-bottom: 80px; /* Garante que a tabela não fique escondida atrás do Footer (que tem 60px) */
+  min-height: 100vh;
+  padding-top: 22px;
+  padding-bottom: 80px;
   box-sizing: border-box;
 }
 
-/* Título igual ao print */
 .section-title {
   color: #3f3f3f;
-  font-size: 1.6rem;
-  font-weight: 500;
-  margin: 0 0 10px 16px; /* Alinha o título com a borda da tabela (16px de margem esquerda) */
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin: 0 16px 16px;
 }
 
-.section-title2 {
-  color: #3f3f3f;
-  font-size: 1.6rem;
-  font-weight: 500;
-  margin: 20px 0 10px 16px; /* Alinha o título com a borda da tabela (16px de margem esquerda) */
+.section-title--upcoming {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: calc(100dvh - 60px);
+    padding: 22px 0 92px;
+    background: linear-gradient(180deg, #fff7f8 0%, #ffffff 42%);
+  }
+
+  .upcoming-section {
+    order: -1;
+  }
+
+  .section-title,
+  .section-title--upcoming {
+    margin: 0 16px 16px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .section-title span {
+    color: #3f3f3f;
+  }
 }

@@ -3,27 +3,44 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-// Importações do Firebase Firestore
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
+import { environment } from '../../../../../environments/environment';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { EsqueciSenhaModalComponent } from '../../components/esqueci-senha-modal/esqueci-senha-modal';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    PasswordModule,
+    ButtonModule,
+    FloatLabelModule,
+    ToastModule,
+    EsqueciSenhaModalComponent
+  ],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  mensagemErro: string = '';
   loading: boolean = false;
+  modalRecuperacaoVisivel = false;
+  readonly recuperacaoDisponivel = environment.useFirebaseAuthentication;
 
-  // NOVO: Injeção do Firestore do jeito recomendado pelo Angular 17+
+  private auth = inject(Auth);
   private firestore = inject(Firestore);
+  private messageService = inject(MessageService);
 
   constructor(
     private fb: FormBuilder,
@@ -42,54 +59,93 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log("Botão de login clicado!"); // Para você ver se entrou na função
-    
     if (this.loginForm.valid) {
       this.loading = true;
+      this.messageService.clear('login');
       const { usuario, senha } = this.loginForm.value;
-
-      console.log(`Buscando no banco o usuário: ${usuario}`);
+      const nomeNormalizado = usuario.trim().toLowerCase();
 
       try {
         const usuariosRef = collection(this.firestore, 'usuarios');
-        
-        // Verifica se o nome e a senha existem
-        const q = query(usuariosRef, 
-          where('nome', '==', usuario.toLowerCase()), 
-          where('senha', '==', senha)
-        );
+        const q = environment.useFirebaseAuthentication
+          ? query(usuariosRef, where('nome', '==', nomeNormalizado))
+          : query(
+              usuariosRef,
+              where('nome', '==', nomeNormalizado),
+              where('senha', '==', senha)
+            );
 
         const querySnapshot = await getDocs(q);
 
-        if (!querySnapshot.empty) {
-          const usuarioEncontrado = querySnapshot.docs[0];
-          const dadosUsuario = usuarioEncontrado.data();
-          
-          console.log("Usuário logado com sucesso:", dadosUsuario);
-
-          // Salva os dados no localStorage
-          localStorage.setItem('usuarioLogado', JSON.stringify({
-            id: usuarioEncontrado.id, 
-            nome: dadosUsuario['nome'],
-            nomeCompleto: dadosUsuario['nomeCompleto'] || dadosUsuario['nome']
-          }));
-
-          this.mensagemErro = '';
-          this.router.navigate(['/home']);
-          
-        } else {
-          console.log("Nenhum usuário encontrado com essa senha.");
-          this.mensagemErro = 'Usuário ou senha incorretos.';
+        if (querySnapshot.empty) {
+          this.exibirCredenciaisInvalidas();
+          return;
         }
+
+        const usuarioEncontrado = querySnapshot.docs[0];
+        const dadosUsuario = usuarioEncontrado.data();
+        let idUsuario = usuarioEncontrado.id;
+
+        if (environment.useFirebaseAuthentication) {
+          const email = dadosUsuario['email'];
+
+          if (typeof email !== 'string' || !email) {
+            this.exibirCredenciaisInvalidas();
+            return;
+          }
+
+          const credencial = await signInWithEmailAndPassword(
+            this.auth,
+            email,
+            senha
+          );
+
+          idUsuario = credencial.user.uid;
+        }
+
+        localStorage.setItem('usuarioLogado', JSON.stringify({
+          id: idUsuario,
+          nome: dadosUsuario['nome'],
+          nomeCompleto: dadosUsuario['nomeCompleto'] || dadosUsuario['nome']
+        }));
+
+        this.messageService.clear('login');
+        await this.router.navigate(['/home']);
       } catch (error) {
-        console.error("Erro CRÍTICO ao buscar no banco: ", error);
-        this.mensagemErro = 'Erro de conexão com o banco de dados.';
+        console.error('Erro ao autenticar usuário:', error);
+        this.exibirCredenciaisInvalidas();
       } finally {
         this.loading = false;
       }
     } else {
-      console.log("O formulário não está válido. Faltou digitar algo.");
       this.loginForm.markAllAsTouched();
+      this.exibirAviso();
     }
+  }
+
+  abrirRecuperacao(): void {
+    this.modalRecuperacaoVisivel = true;
+  }
+
+  private exibirAviso(): void {
+    this.messageService.clear('login');
+    this.messageService.add({
+      key: 'login',
+      severity: 'warn',
+      summary: 'Atenção',
+      detail: 'Preencha os campos corretamente',
+      life: 4000
+    });
+  }
+
+  private exibirCredenciaisInvalidas(): void {
+    this.messageService.clear('login');
+    this.messageService.add({
+      key: 'login',
+      severity: 'warn',
+      summary: 'Atenção',
+      detail: 'Usuário ou senha inválidos.',
+      life: 4000
+    });
   }
 }

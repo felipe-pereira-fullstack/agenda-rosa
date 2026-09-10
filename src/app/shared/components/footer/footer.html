@@ -1,17 +1,49 @@
 <footer class="app-footer">
-  <!-- Botão Home -->
-  <button 
-    class="footer-btn" 
-    routerLink="/home" 
-    routerLinkActive="active-link">
-    <i class="pi pi-home"></i>
+  <button
+    class="footer-btn"
+    type="button"
+    aria-label="Início"
+    title="Início"
+    routerLink="/home"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <i class="pi pi-home" aria-hidden="true"></i>
   </button>
 
-  <!-- Botão Calendário -->
-  <button 
-    class="footer-btn" 
-    routerLink="/calendar" 
-    routerLinkActive="active-link">
-    <i class="pi pi-calendar"></i>
+  <button
+    class="footer-btn"
+    type="button"
+    aria-label="Calendário"
+    title="Calendário"
+    routerLink="/calendar"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <i class="pi pi-calendar" aria-hidden="true"></i>
+  </button>
+
+  <button
+    class="footer-btn"
+    type="button"
+    aria-label="Serviços"
+    title="Serviços"
+    routerLink="/servicos"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <i class="pi pi-wrench" aria-hidden="true"></i>
+  </button>
+
+  <button
+    class="footer-btn"
+    type="button"
+    aria-label="Dashboard"
+    title="Dashboard"
+    routerLink="/dashboard"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <i class="pi pi-wallet" aria-hidden="true"></i>
   </button>
 </footer>

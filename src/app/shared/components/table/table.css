@@ -17,6 +17,22 @@
   font-weight: 500;
 }
 
+.empty-message--highlighted {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 130px;
+  padding: 24px;
+  border: 1px solid #f6d5da;
+  background-color: #fff5f6;
+}
+
+.empty-message--highlighted .pi {
+  font-size: 1.6rem;
+}
+
 /* --- OVERRIDES DO PRIMENG TABLE --- */
 :host ::ng-deep .custom-agenda-table .p-datatable-wrapper {
   border-radius: 12px;
@@ -24,15 +40,18 @@
 
 :host ::ng-deep .custom-agenda-table table {
   border-collapse: collapse;
+  table-layout: fixed;
   width: 100%;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 /* --- CABEÇALHO DA TABELA --- */
 :host ::ng-deep .custom-agenda-table .p-datatable-thead > tr > th {
   background-color: #ffb6b9 !important;
   color: #ffffff !important;
-  font-weight: bold;
-  font-size: 1.2rem !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 700;
+  font-size: 1.1rem !important;
   padding: 15px 10px;
   border: none !important;
   text-align: center !important;
@@ -40,12 +59,21 @@
 
 /* --- CÉLULAS DO CORPO (DADOS) --- */
 :host ::ng-deep .custom-agenda-table .p-datatable-tbody > tr > td {
-  padding: 12px 10px;
+  padding: 13px 10px;
   color: #ffffff;
-  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 1.05rem;
   border: none !important;
   font-weight: 500;
   text-align: center !important;
+}
+
+:host ::ng-deep .custom-agenda-table .p-datatable-tbody > tr > td:nth-child(1),
+:host ::ng-deep .custom-agenda-table .p-datatable-tbody > tr > td:nth-child(3) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.25;
 }
 
 /* --- LINHAS ZEBRADAS (Listradas) --- */
@@ -60,8 +88,19 @@
   background-color: #fba9ac !important;
 }
 
-/* --- CÉLULA DE AÇÕES (alinha os dois botões) --- */
-.acoes-cell {
+/* Mantém a célula como parte da tabela para ela acompanhar a altura da linha. */
+:host ::ng-deep .custom-agenda-table .acoes-header,
+:host ::ng-deep .custom-agenda-table .acoes-cell {
+  width: 78px;
+}
+
+:host ::ng-deep .custom-agenda-table .acoes-cell {
+  overflow: hidden;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.acoes-content {
   display: flex;
   align-items: center;
   justify-content: center;

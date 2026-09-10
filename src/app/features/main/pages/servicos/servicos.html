@@ -1,0 +1,131 @@
+<app-header titulo="Serviços"></app-header>
+
+<div class="main-content">
+  <h2 class="section-title">Serviços cadastrados</h2>
+
+  @if (!carregandoServicos) {
+    <div class="services-table-container">
+      @if (servicos.length === 0) {
+      <div class="empty-message" role="status">
+        <i class="pi pi-sparkles" aria-hidden="true"></i>
+        <p>Ainda não há serviços cadastrados.</p>
+      </div>
+      } @else {
+        <table class="services-table">
+          <thead>
+            <tr>
+              <th scope="col">Serviço</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Duração</th>
+              <th scope="col" class="actions-header">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (servico of servicos; track servico.id) {
+              <tr>
+                <td>{{ servico.nome }}</td>
+                <td>{{ servico.valorCentavos / 100 | currency: 'BRL' }}</td>
+                <td>
+                  {{ servico.duracaoMinutos ? servico.duracaoMinutos + ' min' : '—' }}
+                </td>
+                <td class="actions-cell">
+                  <button
+                    class="delete-service-button"
+                    type="button"
+                    title="Excluir serviço"
+                    [attr.aria-label]="'Excluir serviço ' + servico.nome"
+                    (click)="abrirConfirmacaoExclusao(servico)"
+                  >
+                    <i class="pi pi-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  @if (mensagemErro) {
+    <p class="page-error" role="alert">{{ mensagemErro }}</p>
+  }
+
+  <button
+    class="fab-button"
+    type="button"
+    aria-label="Cadastrar serviço"
+    (click)="abrirModalServico()"
+  >
+    <i class="pi pi-plus" aria-hidden="true"></i>
+  </button>
+</div>
+
+@if (carregandoServicos) {
+  <div class="loading-overlay" role="status" aria-live="polite">
+    <div class="loading-modal">
+      <i class="pi pi-spinner loading-spinner" aria-hidden="true"></i>
+      <span>Carregando serviços...</span>
+    </div>
+  </div>
+}
+
+<app-servicos-modal
+  [(visible)]="modalServicoVisivel"
+  [salvando]="salvandoServico"
+  [erroAoSalvar]="mensagemErro"
+  (salvar)="salvarServico($event)"
+/>
+
+<p-dialog
+  header="Excluir serviço"
+  [visible]="!!servicoParaExcluir"
+  (visibleChange)="aoAlterarVisibilidadeExclusao($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!excluindoServico"
+  [closeOnEscape]="!excluindoServico"
+  [dismissableMask]="!excluindoServico"
+  [style]="{ width: 'min(360px, calc(100vw - 40px))' }"
+  styleClass="delete-service-dialog"
+>
+  <div class="delete-confirmation">
+    <span class="delete-confirmation-icon" aria-hidden="true">
+      <i class="pi pi-trash"></i>
+    </span>
+    <p>
+      Deseja excluir o serviço
+      <strong>{{ servicoParaExcluir?.nome }}</strong>?
+    </p>
+  </div>
+
+  <p class="delete-explanation">
+    Os agendamentos antigos continuarão preservados.
+  </p>
+
+  @if (erroExclusao) {
+    <p class="delete-error" role="alert">{{ erroExclusao }}</p>
+  }
+
+  <div class="delete-dialog-actions">
+    <button
+      class="confirm-delete-button"
+      type="button"
+      [disabled]="excluindoServico"
+      (click)="confirmarExclusao()"
+    >
+      {{ excluindoServico ? 'Excluindo...' : 'Excluir' }}
+    </button>
+    <button
+      class="cancel-delete-button"
+      type="button"
+      [disabled]="excluindoServico"
+      (click)="cancelarExclusao()"
+    >
+      Cancelar
+    </button>
+  </div>
+</p-dialog>
+
+<app-footer></app-footer>

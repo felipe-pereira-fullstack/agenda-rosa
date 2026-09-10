@@ -1,0 +1,84 @@
+<p-dialog
+  header="Cadastrar serviço"
+  [visible]="visible"
+  (visibleChange)="aoAlterarVisibilidade($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!salvando"
+  [closeOnEscape]="!salvando"
+  [dismissableMask]="!salvando"
+  [style]="{ width: 'min(430px, calc(100vw - 40px))' }"
+  styleClass="service-dialog"
+>
+  <div class="services-introduction">
+    <span class="services-icon" aria-hidden="true">
+      <i class="pi pi-sparkles"></i>
+    </span>
+    <p>Informe o serviço oferecido e o valor cobrado por atendimento.</p>
+  </div>
+
+  <form class="services-form" [formGroup]="servicoForm" (ngSubmit)="salvarServico()">
+    <div class="field">
+      <div class="float-field">
+        <i class="pi pi-tag field-icon" aria-hidden="true"></i>
+        <input
+          id="nome-servico"
+          class="rounded-input"
+          type="text"
+          placeholder=" "
+          formControlName="nome"
+          autocomplete="off"
+        />
+        <label for="nome-servico">Nome do serviço</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="float-field float-field--currency">
+        <i class="pi pi-wallet field-icon" aria-hidden="true"></i>
+        <span class="currency-prefix" aria-hidden="true">R$</span>
+        <input
+          id="valor-servico"
+          class="rounded-input currency-input"
+          type="text"
+          placeholder=" "
+          formControlName="valor"
+          inputmode="decimal"
+          autocomplete="off"
+        />
+        <label for="valor-servico">Valor</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="float-field">
+        <i class="pi pi-clock field-icon" aria-hidden="true"></i>
+        <input
+          id="duracao-servico"
+          class="rounded-input"
+          type="number"
+          placeholder=" "
+          formControlName="duracao"
+          inputmode="numeric"
+          min="1"
+          autocomplete="off"
+        />
+        <label for="duracao-servico">Duração em minutos (opcional)</label>
+      </div>
+    </div>
+
+    @if (erroFormulario || erroAoSalvar) {
+      <p class="form-error" role="alert">{{ erroFormulario || erroAoSalvar }}</p>
+    }
+
+    <div class="dialog-actions">
+      <button class="primary-button" type="submit" [disabled]="salvando">
+        {{ salvando ? 'Salvando...' : 'Salvar serviço' }}
+      </button>
+      <button class="secondary-button" type="button" [disabled]="salvando" (click)="fechar()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</p-dialog>

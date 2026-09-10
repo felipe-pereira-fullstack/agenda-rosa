@@ -19,6 +19,7 @@ export interface agendamentos {
 export class TableComponent {
   @Input() agendamentos: agendamentos[] = [];
   @Input() mostrarAcoes: boolean = true;
+  @Input() vazioDestacado: boolean = false;
  
   @Output() onDeletar = new EventEmitter<agendamentos>();
   @Output() onEditar = new EventEmitter<agendamentos>();

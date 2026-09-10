@@ -17,7 +17,7 @@ import { Firestore, collection, query, where, getDocs } from '@angular/fire/fire
 })
 export class HomeComponent implements OnInit {
 
-  diaAtual: number = 1; 
+  diaAtual = '';
   agendamentosDoDia: any[] = [];
   nomeDoUsuario: string = '';
 
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     const dia = String(hoje.getDate()).padStart(2, '0');
     const hojeFormatado = `${ano}-${mes}-${dia}`;
     
-    this.diaAtual = hoje.getDate();
+    this.diaAtual = String(hoje.getDate());
 
     // 3. Busca os agendamentos reais lá no banco de dados para ESSA pessoa
     this.buscarAgendamentosDoBanco(usuarioLogado.id, hojeFormatado);

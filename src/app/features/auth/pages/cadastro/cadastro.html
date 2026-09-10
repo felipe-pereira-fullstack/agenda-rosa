@@ -1,15 +1,15 @@
 <div class="main-wrapper">
-  <p-toast key="login" position="bottom-center" />
+  <p-toast key="cadastro" position="bottom-center" />
 
   <div class="login-page">
     <div class="login-box">
       <div class="container-titles">
         <img class="login-logo" src="/img/logoRosa.png" alt="Logo Agenda Rosa" />
-        <h1 class="title">Bem <span class="title-gradient">Vindo!</span></h1>
-        <h2 class="subtitle">Preencha os dados abaixo para começar.</h2>
+        <h1 class="title">Criar <span class="title-gradient">Conta!</span></h1>
+        <h2 class="subtitle">Cadastre-se para começar.</h2>
       </div>
 
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
         <div class="field">
           <p-floatlabel variant="on" class="float-field">
             <i class="pi pi-user p-inputicon field-icon" aria-hidden="true"></i>
@@ -22,6 +22,21 @@
               autocomplete="username"
             />
             <label for="usuario">Usuário</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="field">
+          <p-floatlabel variant="on" class="float-field">
+            <i class="pi pi-envelope p-inputicon field-icon" aria-hidden="true"></i>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              class="rounded-input"
+              autocomplete="email"
+            />
+            <label for="email">E-mail</label>
           </p-floatlabel>
         </div>
 
@@ -42,38 +57,20 @@
           </p-floatlabel>
         </div>
 
-        @if (recuperacaoDisponivel) {
-          <div class="forgot-password">
-            <button
-              type="button"
-              class="forgot-password-link"
-              (click)="abrirRecuperacao()"
-            >
-              Esqueceu a senha?
-            </button>
-          </div>
-        }
-
         <button
           pButton
-          type="button"
-          label="Continuar"
+          type="submit"
+          [label]="loading ? 'Cadastrando...' : 'Criar conta'"
+          [disabled]="loading"
           class="login-button p-button-rounded"
-          (click)="onSubmit()"
         ></button>
       </form>
 
       <div class="create-account">
         <p>
-          Ainda não possui uma conta? <a class="create-account-link" href="/cadastro">Crie uma agora.</a>
+          Já possui uma conta? <a class="create-account-link" routerLink="/login">Entre clicando aqui!</a>
         </p>
       </div>
     </div>
   </div>
-
-  @if (recuperacaoDisponivel) {
-    <app-esqueci-senha-modal
-      [(visible)]="modalRecuperacaoVisivel"
-    />
-  }
 </div>

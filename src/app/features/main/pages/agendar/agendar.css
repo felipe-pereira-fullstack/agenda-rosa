@@ -20,7 +20,7 @@
 /* --- BOTÃO FLUTUANTE (FAB) --- */
 .fab-button {
   position: fixed;
-  bottom: 80px; /* Acima do footer (60px) + margem (20px) */
+  bottom: 100px;
   right: 20px;
   width: 50px;
   height: 50px;
@@ -45,112 +45,295 @@
   transform: scale(0.95);
 }
 
-
-/* -------------------------------------------------------------
-   ESTILOS DO MODAL (DIALOG) 
-   ------------------------------------------------------------- */
-
-/* Controla o tamanho geral da janela do modal na tela */
-:host ::ng-deep .modal-agendamento-rosa .p-dialog {
-  width: 90vw !important; /* Quase a largura toda no celular */
-  max-width: 450px !important; /* Limite de tamanho em telas de PC */
-  margin: 0 auto;
+:host ::ng-deep .appointment-dialog {
+  border: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgb(82 35 48 / 24%);
 }
 
-/* O fundo rosa e o quadrado principal do modal */
-:host ::ng-deep .modal-agendamento-rosa .p-dialog-content {
-  background-color: #f78184 !important; /* Fundo Rosa do Modal */
-  border-radius: 20px !important; /* Bordas mais suaves e arredondadas */
-  padding: 40px 30px !important; /* Mais respiro (espaçamento interno) */
-  font-family: 'Roboto', sans-serif;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra elegante de profundidade */
+:host ::ng-deep .delete-dialog {
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgb(82 35 48 / 24%);
 }
 
-/* Título "Marque um Horário" */
-.modal-title {
-  color: #ffffff;
-  font-size: 1.8rem; /* Título um pouco maior */
-  font-weight: 700;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 35px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Dá um leve destaque na fonte branca */
+:host ::ng-deep .delete-dialog .p-dialog-header {
+  padding: 22px 22px 8px;
+  background: #ffffff;
+  color: #3f3f3f;
 }
 
-/* Espaçamento entre as caixas de texto */
-.field {
-  margin-bottom: 25px; 
+:host ::ng-deep .delete-dialog .p-dialog-title {
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
-/* As caixas de texto (Inputs) */
-.modal-input {
-  width: 100%;
-  background-color: #0d1b2a !important; /* Cor bem escura quase preta */
-  color: #ffffff !important;
-  border: 2px solid transparent !important; /* Borda transparente para não pular ao clicar */
-  border-radius: 8px !important; /* Borda levemente arredondada (moderna) */
-  padding: 14px 18px !important; /* Input mais altinho/gordinho */
-  font-size: 1.05rem !important;
-  font-weight: 500;
-  transition: all 0.3s ease; /* Transição suave ao clicar */
+:host ::ng-deep .delete-dialog .p-dialog-content {
+  padding: 12px 22px 22px;
+  background: #ffffff;
 }
 
-/* Cor do texto falso ("Nome da Cliente", "Horário", etc) */
-.modal-input::placeholder {
-  color: rgba(255, 255, 255, 0.7); 
+:host ::ng-deep .appointment-dialog .p-dialog-header {
+  padding: 24px 24px 8px;
+  background: #ffffff;
+  color: #3f3f3f;
 }
 
-/* Efeito quando o usuário clica na caixa de texto para digitar (Focus) */
-.modal-input:focus {
-  outline: none;
-  border: 2px solid #ffffff !important; /* Cria uma bordinha branca sutil quando clica */
-  box-shadow: 0 4px 12px rgba(13, 27, 42, 0.3) !important;
+:host ::ng-deep .appointment-dialog .p-dialog-title {
+  font-size: 1.45rem;
+  font-weight: 600;
 }
 
-/* Div que alinha os botões lado a lado */
-.modal-actions {
+:host ::ng-deep .appointment-dialog .p-dialog-content {
+  padding: 12px 24px 24px;
+  background: #ffffff;
+}
+
+.appointment-introduction {
   display: flex;
-  justify-content: center; /* Centraliza os botões */
-  gap: 20px; /* Distância entre os botões "Salvar" e "Cancelar" */
-  margin-top: 45px;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
 }
 
-/* Estilo dos Botões "Salvar" e "Cancelar" */
-:host ::ng-deep .modal-btn-dark {
-  background-color: #0d1b2a !important;
-  color: #ffffff !important;
-  border: none !important;
-  border-radius: 30px !important; /* Botões arredondados em formato de pílula */
-  padding: 12px 35px !important; /* Botões mais largos */
-  font-weight: bold;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s; /* Efeito animado ao clicar */
+.appointment-introduction p {
+  margin: 0;
+  color: #66636a;
+  font-size: 1rem;
+  line-height: 1.45;
 }
 
-/* Efeito Hover (passar o mouse) nos botões */
-:host ::ng-deep .modal-btn-dark:hover {
-  background-color: #1a365d !important; /* Fica um tom mais claro ao passar o mouse */
+.appointment-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffeaee;
+  color: #ff3f7f;
+  font-size: 1.15rem;
 }
 
-/* Efeito ao clicar nos botões */
-:host ::ng-deep .modal-btn-dark:active {
-  transform: scale(0.95); /* Dá uma leve afundada no botão quando clicado */
+.appointment-form {
+  display: grid;
+  gap: 18px;
 }
 
-/* Select do Serviço */
-.modal-select {
+.field {
+  min-width: 0;
+}
+
+.float-field {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.field-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  z-index: 1;
+  color: #959ba8;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: color 0.2s ease;
+}
+
+.rounded-input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px 0 44px;
+  border: 1px solid #959ba8;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+  color: #3f3f3f;
+  font: inherit;
+  font-size: 1.05rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.float-field label {
+  position: absolute;
+  top: 50%;
+  left: 44px;
+  max-width: calc(100% - 60px);
+  padding: 0 4px;
+  background: #ffffff;
+  color: #3f3f3f;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  transition: top 0.2s ease, left 0.2s ease, transform 0.2s ease;
+}
+
+.rounded-input:focus {
+  border-color: #f78184;
+  box-shadow: 0 0 0 1px #f78184;
+}
+
+.float-field:has(.rounded-input:focus) .field-icon {
+  color: #f78184;
+}
+
+.rounded-input:focus + label,
+.rounded-input:not(.select-input):not(:placeholder-shown) + label {
+  top: 0;
+  left: 12px;
+  transform: translateY(-50%) scale(0.86);
+}
+
+.select-field:has(.select-input:focus) label,
+.select-field.has-value label {
+  top: 0;
+  left: 12px;
+  transform: translateY(-50%) scale(0.86);
+}
+
+.select-input {
   appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important;
-  background-repeat: no-repeat !important;
-  background-position: right 14px center !important;
-  background-color: #0d1b2a !important;
+  padding-right: 42px;
   cursor: pointer;
 }
 
-/* Cor das opções dentro do dropdown */
-.modal-select option {
-  background-color: #0d1b2a;
+.select-input:disabled {
+  background: #f7f7f7;
+  color: #77727a;
+  cursor: not-allowed;
+}
+
+.select-field::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #959ba8;
+  border-bottom: 2px solid #959ba8;
+  pointer-events: none;
+  transform: translateY(-70%) rotate(45deg);
+}
+
+.field-help {
+  margin: 7px 4px 0;
+  color: #8b5c65;
+  font-size: 0.88rem;
+}
+
+.field-error {
+  margin: 7px 4px 0;
+  color: #b42318;
+  font-size: 0.88rem;
+}
+
+.dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  min-height: 46px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff3f7f 0%, #f78184 100%);
   color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.danger-button {
+  background: linear-gradient(90deg, #d93f68 0%, #ed667d 100%);
+}
+
+.primary-button:disabled,
+.secondary-button:disabled,
+.danger-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.primary-button:hover,
+.primary-button:focus-visible,
+.secondary-button:hover,
+.secondary-button:focus-visible,
+.danger-button:hover,
+.danger-button:focus-visible {
+  filter: brightness(0.97);
+  outline: none;
+}
+
+.primary-button:active,
+.secondary-button:active,
+.danger-button:active {
+  transform: scale(0.98);
+}
+
+.delete-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.delete-confirmation p {
+  margin: 0;
+  color: #555057;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.delete-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffeaee;
+  color: #d93f68;
+  font-size: 1.1rem;
+}
+
+.delete-error {
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.delete-actions {
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .appointment-dialog .p-dialog-header {
+    padding: 20px 20px 8px;
+  }
+
+  :host ::ng-deep .appointment-dialog .p-dialog-content {
+    padding: 12px 20px 20px;
+  }
+
+  :host ::ng-deep .delete-dialog .p-dialog-header {
+    padding: 20px 20px 8px;
+  }
+
+  :host ::ng-deep .delete-dialog .p-dialog-content {
+    padding: 12px 20px 20px;
+  }
+
+  .dialog-actions {
+    grid-template-columns: 1fr;
+  }
 }

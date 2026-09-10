@@ -1,0 +1,326 @@
+.main-content {
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding-top: 22px;
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.section-title {
+  margin: 0 16px 16px;
+  color: #3f3f3f;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.services-table-container {
+  width: calc(100% - 32px);
+  margin: 0 16px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.services-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: 'Roboto', sans-serif;
+}
+
+.services-table th {
+  padding: 15px 10px;
+  border: 0;
+  background-color: #ffb6b9;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.services-table td {
+  padding: 13px 10px;
+  border: 0;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.services-table tbody tr:nth-child(odd) {
+  background-color: #f78184;
+}
+
+.services-table tbody tr:nth-child(even) {
+  background-color: #fba9ac;
+}
+
+.actions-header,
+.actions-cell {
+  width: 60px;
+}
+
+.delete-service-button {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.delete-service-button:hover,
+.delete-service-button:focus-visible {
+  outline: none;
+  background: rgb(255 255 255 / 20%);
+  transform: scale(1.08);
+}
+
+:host ::ng-deep .delete-service-dialog {
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgb(82 35 48 / 24%);
+}
+
+:host ::ng-deep .delete-service-dialog .p-dialog-header {
+  padding: 22px 22px 8px;
+  background: #ffffff;
+  color: #3f3f3f;
+}
+
+:host ::ng-deep .delete-service-dialog .p-dialog-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .delete-service-dialog .p-dialog-content {
+  padding: 12px 22px 22px;
+  background: #ffffff;
+}
+
+.delete-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.delete-confirmation p {
+  margin: 0;
+  color: #555057;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.delete-confirmation-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffeaee;
+  color: #d93f68;
+  font-size: 1.1rem;
+}
+
+.delete-explanation {
+  margin: 4px 0 0 56px;
+  color: #80787d;
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.delete-error {
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.delete-dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.confirm-delete-button,
+.cancel-delete-button {
+  min-height: 46px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff3f7f 0%, #f78184 100%);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.confirm-delete-button {
+  background: linear-gradient(90deg, #d93f68 0%, #ed667d 100%);
+}
+
+.confirm-delete-button:disabled,
+.cancel-delete-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.confirm-delete-button:hover,
+.confirm-delete-button:focus-visible,
+.cancel-delete-button:hover,
+.cancel-delete-button:focus-visible {
+  outline: none;
+  filter: brightness(0.97);
+}
+
+.empty-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 130px;
+  padding: 24px;
+  border: 1px solid #f6d5da;
+  border-radius: 12px;
+  background-color: #fff5f6;
+  color: #f78184;
+  text-align: center;
+}
+
+.empty-message .pi {
+  font-size: 1.6rem;
+}
+
+.empty-message p {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.page-error {
+  margin: 12px 16px 0;
+  color: #b42318;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(35 24 28 / 18%);
+}
+
+.loading-modal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  border: 1px solid #f6d5da;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgb(82 35 48 / 22%);
+  color: #3f3f3f;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.loading-spinner {
+  color: #f78184;
+  font-size: 1.4rem;
+  animation: loading-spin 0.8s linear infinite;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #ff848a;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+  cursor: pointer;
+  z-index: 999;
+}
+
+.fab-button .pi {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.fab-button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    margin: 0 16px 16px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .services-table th {
+    padding: 13px 4px;
+  }
+
+  .services-table td {
+    padding: 12px 4px;
+  }
+
+  .services-table th:nth-child(1) {
+    width: 32%;
+  }
+
+  .services-table th:nth-child(2) {
+    width: 24%;
+  }
+
+  .services-table th:nth-child(3) {
+    width: 27%;
+  }
+
+  .services-table .actions-header,
+  .services-table .actions-cell {
+    width: 17%;
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .delete-service-dialog .p-dialog-header {
+    padding: 20px 20px 8px;
+  }
+
+  :host ::ng-deep .delete-service-dialog .p-dialog-content {
+    padding: 12px 20px 20px;
+  }
+
+  .delete-dialog-actions {
+    grid-template-columns: 1fr;
+  }
+}

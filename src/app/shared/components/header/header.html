@@ -1,24 +1,84 @@
 <header class="app-header">
-  <!-- Imagem da Logo Branca -->
   <div class="logo-container">
-    <img src="/img/logoBranca.png" alt="Logo" class="header-logo">
+    <button
+      class="logo-button"
+      type="button"
+      aria-label="Ir para o início"
+      title="Início"
+      (click)="irParaHome()"
+    >
+      <img src="/img/logoBranca.png" alt="Agenda Rosa" class="header-logo">
+    </button>
   </div>
 
-  <!-- Título Dinâmico -->
   <div class="title-container">
     <h1>{{ titulo }}</h1>
   </div>
 
-  <!-- Menu Hambúrguer -->
   <div class="menu-container">
-    <!-- O (click)="menu.toggle($event)" abre o popup -->
-    <button 
-      class="hamburger-btn" 
-      (click)="menu.toggle($event)">
-      <i class="pi pi-bars"></i>
+    <button
+      class="hamburger-btn"
+      type="button"
+      aria-label="Abrir menu"
+      title="Menu"
+      (click)="menu.toggle($event)"
+    >
+      <span class="hamburger-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </button>
-    
-    <!-- O popup invisível até clicar -->
-    <p-menu #menu [model]="menuItems" [popup]="true"></p-menu>
+
+    <p-menu
+      #menu
+      [model]="menuItems"
+      [popup]="true"
+      styleClass="header-account-menu"
+    ></p-menu>
   </div>
 </header>
+
+<p-dialog
+  header="Sair do sistema"
+  [visible]="modalSaidaVisivel"
+  (visibleChange)="aoAlterarVisibilidadeSaida($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!saindo"
+  [closeOnEscape]="!saindo"
+  [dismissableMask]="!saindo"
+  [style]="{ width: 'min(360px, calc(100vw - 40px))' }"
+  styleClass="logout-dialog"
+>
+  <div class="logout-confirmation">
+    <span class="logout-icon" aria-hidden="true">
+      <i class="pi pi-sign-out"></i>
+    </span>
+    <p>Tem certeza de que deseja sair do sistema?</p>
+  </div>
+
+  @if (erroSaida) {
+    <p class="logout-error" role="alert">{{ erroSaida }}</p>
+  }
+
+  <div class="logout-actions">
+    <button
+      class="confirm-logout-button"
+      type="button"
+      [disabled]="saindo"
+      (click)="confirmarSaida()"
+    >
+      {{ saindo ? 'Saindo...' : 'Sim, sair' }}
+    </button>
+    <button
+      class="cancel-logout-button"
+      type="button"
+      [disabled]="saindo"
+      (click)="cancelarSaida()"
+    >
+      Cancelar
+    </button>
+  </div>
+</p-dialog>

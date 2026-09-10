@@ -1,31 +1,22 @@
 .mini-calendar-container {
-  width: calc(100% - 32px); /* Desconta a margem lateral */
+  width: calc(100% - 32px);
   margin: 20px 16px;
-  font-family: 'Crimson Text', serif; /* Mantendo a tipografia do seu app */
-}
-
-.calendar-title {
-  color: #3f3f3f;
-  font-size: 1.6rem;
-  font-weight: 500;
-  margin: 0 0 15px 0; /* Espaço abaixo do título */
-  text-align: left;
+  font-family: 'Crimson Text', serif;
 }
 
 .days-row {
   display: flex;
-  justify-content: space-between; /* Distribui os 5 quadrados igualmente */
+  justify-content: space-between;
   align-items: center;
-  gap: 8px; /* Espacinho entre eles */
+  gap: 8px;
 }
 
-/* O botão quadradinho rosa */
 .day-card {
-  flex: 1; /* Faz todos terem a mesma largura */
-  aspect-ratio: 1 / 1.1; /* Deixa o bloco levemente mais alto que largo (retangularzinho) */
-  background-color: #f78184; /* O rosa da identidade */
+  flex: 1;
+  aspect-ratio: 1 / 1.1;
+  background-color: #f78184;
   border: none;
-  border-radius: 4px; /* Bordas levemente arredondadas */
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,7 +26,6 @@
   transition: transform 0.2s, filter 0.2s;
 }
 
-/* Efeito de clique */
 .day-card:active {
   transform: scale(0.95);
   filter: brightness(0.9);
@@ -45,7 +35,6 @@
   outline: none;
 }
 
-/* Textos dentro do quadrado */
 .day-name {
   color: #ffffff;
   font-size: 1.1rem;
@@ -55,4 +44,53 @@
 .day-number {
   color: #ffffff;
   font-size: 1.4rem;
+}
+
+@media (max-width: 768px) {
+  .mini-calendar-container {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .days-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 10px;
+    padding: 4px 20px 22px;
+  }
+
+  .day-card {
+    width: 100%;
+    min-width: 0;
+    min-height: 92px;
+    aspect-ratio: auto;
+    gap: 5px;
+    padding: 12px 6px;
+    border: 1px solid #f2d9de;
+    border-radius: 28px;
+    background: #f8e9ec;
+    box-shadow: 0 7px 18px rgb(91 43 56 / 8%);
+  }
+
+  .day-card:active {
+    scale: 0.96;
+  }
+
+  .day-number {
+    order: 1;
+    color: #4c3e42;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .day-name {
+    order: 2;
+    margin: 0;
+    color: #817378;
+    font-size: 0.95rem;
+  }
+
 }

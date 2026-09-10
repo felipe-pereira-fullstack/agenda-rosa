@@ -6,46 +6,166 @@
 
   <!-- A tabela de agendamentos -->
   <app-agendamentos-table
-  [agendamentos]="agendamentosDoDia"
-  (onDeletar)="removerDaLista($event)"
-  (onEditar)="abrirModalEdicao($event)">
-</app-agendamentos-table>
+    [agendamentos]="agendamentosDoDia"
+    [vazioDestacado]="true"
+    (onDeletar)="removerDaLista($event)"
+    (onEditar)="abrirModalEdicao($event)"
+  ></app-agendamentos-table>
 
   <!-- Botão Flutuante (+) -->
-  <button class="fab-button" (click)="abrirModal()">
-    <i class="pi pi-plus"></i>
+  <button
+    class="fab-button"
+    type="button"
+    aria-label="Criar agendamento"
+    (click)="abrirModal()"
+  >
+    <i class="pi pi-plus" aria-hidden="true"></i>
   </button>
 </div>
 
 <app-footer></app-footer>
 
-<!-- MODAL DE AGENDAMENTO -->
-<p-dialog 
-  [(visible)]="mostrarModalAgendamento" 
-  [modal]="true" 
-  [closable]="false"
-  [showHeader]="false"
-  styleClass="modal-agendamento-rosa">
-  
-  <div class="modal-content">
-    <h3 class="modal-title">Marque um Horário</h3>
-
-    <div class="field">
-      <input type="text" pInputText placeholder="Nome da Cliente" [(ngModel)]="novoAgendamento.nome" class="modal-input" />
-    </div>
-
-    <div class="field">
-      <input type="text" pInputText placeholder="Horário" [(ngModel)]="novoAgendamento.hora" class="modal-input" />
-    </div>
-
-    <div class="field">
-      <input type="text" pInputText placeholder="Serviço" [(ngModel)]="novoAgendamento.servico" class="modal-input" />
-    </div>
-
-    <div class="modal-actions">
-      <button pButton label="Salvar" class="modal-btn-dark" (click)="salvarAgendamento()"></button>
-      <button pButton label="Cancelar" class="modal-btn-dark" (click)="cancelarAgendamento()"></button>
-    </div>
+<p-dialog
+  [header]="idAgendamentoEmEdicao ? 'Editar agendamento' : 'Novo agendamento'"
+  [visible]="mostrarModalAgendamento"
+  (visibleChange)="aoAlterarVisibilidadeModal($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+  [style]="{ width: 'min(430px, calc(100vw - 40px))' }"
+  styleClass="appointment-dialog"
+>
+  <div class="appointment-introduction">
+    <span class="appointment-icon" aria-hidden="true">
+      <i class="pi pi-calendar-plus"></i>
+    </span>
+    <p>Informe os dados da cliente e o serviço que será realizado.</p>
   </div>
 
+  <form class="appointment-form" (ngSubmit)="salvarAgendamento()">
+    <div class="field">
+      <div class="float-field">
+        <i class="pi pi-user field-icon" aria-hidden="true"></i>
+        <input
+          id="nome-cliente"
+          class="rounded-input"
+          type="text"
+          name="nomeCliente"
+          placeholder=" "
+          autocomplete="off"
+          [(ngModel)]="novoAgendamento.nome"
+        />
+        <label for="nome-cliente">Nome da cliente</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="float-field">
+        <i class="pi pi-clock field-icon" aria-hidden="true"></i>
+        <input
+          id="horario-agendamento"
+          class="rounded-input"
+          type="text"
+          name="horario"
+          placeholder=" "
+          inputmode="numeric"
+          maxlength="5"
+          autocomplete="off"
+          [value]="novoAgendamento.hora"
+          (keydown)="bloquearTeclaHorario($event)"
+          (input)="aoDigitarHorario($event)"
+          (blur)="normalizarHorario(false)"
+        />
+        <label for="horario-agendamento">Horário</label>
+      </div>
+      @if (erroHorario) {
+        <p class="field-error" role="alert">{{ erroHorario }}</p>
+      }
+    </div>
+
+    <div class="field">
+      <div
+        class="float-field select-field"
+        [class.has-value]="novoAgendamento.servicoId"
+      >
+        <i class="pi pi-sparkles field-icon" aria-hidden="true"></i>
+        <select
+          id="servico-agendamento"
+          class="rounded-input select-input"
+          name="servico"
+          required
+          [disabled]="carregandoServicos || servicosDisponiveis.length === 0"
+          [(ngModel)]="novoAgendamento.servicoId"
+        >
+          <option value="" disabled hidden></option>
+          @for (servico of servicosDisponiveis; track servico.id) {
+            <option [value]="servico.id">
+              {{ servico.nome }} — {{ servico.valorCentavos / 100 | currency: 'BRL' }}
+            </option>
+          }
+        </select>
+        <label for="servico-agendamento">Serviço</label>
+      </div>
+      @if (!carregandoServicos && servicosDisponiveis.length === 0) {
+        <p class="field-help">Cadastre um serviço antes de criar o agendamento.</p>
+      }
+    </div>
+
+    <div class="dialog-actions">
+      <button class="primary-button" type="submit">
+        {{ idAgendamentoEmEdicao ? 'Salvar alterações' : 'Salvar agendamento' }}
+      </button>
+      <button class="secondary-button" type="button" (click)="cancelarAgendamento()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog
+  header="Excluir agendamento"
+  [visible]="!!agendamentoParaExcluir"
+  (visibleChange)="aoAlterarVisibilidadeExclusao($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!excluindoAgendamento"
+  [closeOnEscape]="!excluindoAgendamento"
+  [dismissableMask]="!excluindoAgendamento"
+  [style]="{ width: 'min(360px, calc(100vw - 40px))' }"
+  styleClass="delete-dialog"
+>
+  <div class="delete-confirmation">
+    <span class="delete-icon" aria-hidden="true">
+      <i class="pi pi-trash"></i>
+    </span>
+    <p>
+      Deseja excluir o agendamento de
+      <strong>{{ agendamentoParaExcluir?.nome }}</strong>?
+    </p>
+  </div>
+
+  @if (erroExclusao) {
+    <p class="delete-error" role="alert">{{ erroExclusao }}</p>
+  }
+
+  <div class="dialog-actions delete-actions">
+    <button
+      class="danger-button"
+      type="button"
+      [disabled]="excluindoAgendamento"
+      (click)="confirmarExclusao()"
+    >
+      {{ excluindoAgendamento ? 'Excluindo...' : 'Excluir' }}
+    </button>
+    <button
+      class="secondary-button"
+      type="button"
+      [disabled]="excluindoAgendamento"
+      (click)="cancelarExclusao()"
+    >
+      Cancelar
+    </button>
+  </div>
 </p-dialog>

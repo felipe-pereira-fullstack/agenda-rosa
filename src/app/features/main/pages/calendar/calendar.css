@@ -1,113 +1,182 @@
-/* --- CONTAINER PRINCIPAL --- */
-.calendar-wrapper {
-  max-width: 320px;
-  margin: 0 40px;
+.main-content {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 24px 16px 110px;
+  background: linear-gradient(180deg, #fff7f8 0%, #ffffff 45%);
 }
 
-/* --- OVERRIDES DO CALENDÁRIO PRIMENG PARA TEMA CLARO E ROSA --- */
-
-/* Fundo geral do calendário e remoção da borda */
-:host ::ng-deep .p-datepicker {
-  background-color: #ffffff !important;
-  color: #3f3f3f !important;
-  border: none !important;
+.section-title {
+  margin: 0 0 16px;
+  color: #3f3f3f;
   font-family: 'Roboto', sans-serif;
-  font-size: 0.9rem;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-align: left;
 }
 
-/* Fundo interno da versão Inline */
-:host ::ng-deep .p-datepicker-inline {
-  width: 100% !important;
-  background-color: #ffffff !important;
+.calendar-wrapper {
+  width: min(100%, 420px);
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 14px;
+  border: 1px solid #f6d5da;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 38px rgb(82 35 48 / 13%);
 }
 
-/* Header do calendário */
-:host ::ng-deep .p-datepicker-header {
-  background-color: #ffffff !important;
-  color: #3f3f3f !important;
-  border-bottom: 1px solid #f0f0f0 !important;
-  padding: 0.5rem 0.75rem !important;
-}
-
-/* Cor dos botões de Mês e Ano no cabeçalho */
-:host ::ng-deep .p-datepicker .p-datepicker-title .p-datepicker-month,
-:host ::ng-deep .p-datepicker .p-datepicker-title .p-datepicker-year {
-  color: #3f3f3f !important;
-  font-weight: bold;
-  font-size: 0.95rem;
-}
-
-/* Cor das setinhas */
-:host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-prev,
-:host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-next {
-  color: #f78184 !important;
-  width: 2rem !important;
-  height: 2rem !important;
-}
-
-/* Cor dos dias da semana */
-:host ::ng-deep .p-datepicker table th {
-  color: #7a7a7a !important;
-  font-weight: normal;
-  font-size: 0.8rem;
-  padding: 4px !important;
-}
-
-/* Configuração dos números dos dias normais */
-:host ::ng-deep .p-datepicker table td {
-  padding: 3px !important;
-}
-
-:host ::ng-deep .p-datepicker table td > span {
-  width: 30px !important;
-  height: 30px !important;
-  font-size: 0.9rem !important;
-  color: #3f3f3f !important;
-  background-color: transparent !important;
-  border-radius: 50%;
-}
-
-/* Dias fora do mês atual */
-:host ::ng-deep .p-datepicker table td.p-datepicker-other-month > span {
-  color: #cccccc !important;
-}
-
-/* Hover */
-:host ::ng-deep .p-datepicker table td > span:not(.p-highlight):hover {
-  background-color: #fcebeb !important;
-  color: #f78184 !important;
-}
-
-/* Dia de Hoje */
-:host ::ng-deep .p-datepicker table td > span.p-datepicker-today {
-  background-color: #ffffff !important;
-  color: #f78184 !important;
-  font-weight: bold;
-}
-
-/* Dia selecionado */
-:host ::ng-deep .p-datepicker table td > span.p-highlight {
-  background-color: #f78184 !important;
-  color: #ffffff !important;
-  font-weight: bold;
-  box-shadow: 0 2px 6px rgba(247, 129, 132, 0.4);
-}
-
-/* Remove foco padrão */
-:host ::ng-deep .p-datepicker table td > span:focus {
-  outline: none !important;
-  box-shadow: none !important;
+:host ::ng-deep .calendar-wrapper > p-datepicker {
+  display: block;
+  width: 100%;
 }
 
 :host ::ng-deep .calendar-wrapper,
-:host ::ng-deep .calendar-wrapper * ,
+:host ::ng-deep .calendar-wrapper *,
 :host ::ng-deep .calendar-wrapper *::before,
 :host ::ng-deep .calendar-wrapper *::after {
-  box-sizing: content-box !important;
+  box-sizing: border-box;
 }
 
-h2 {
+:host ::ng-deep .p-datepicker,
+:host ::ng-deep .p-datepicker-inline,
+:host ::ng-deep .p-datepicker-panel,
+:host ::ng-deep .p-datepicker-panel-inline,
+:host ::ng-deep .p-datepicker-calendar-container {
+  width: 100% !important;
+  border: 0 !important;
+  background: #ffffff !important;
+  color: #3f3f3f !important;
+  font-family: 'Roboto', sans-serif;
+}
+
+:host ::ng-deep .p-datepicker-header {
+  margin-bottom: 10px;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 15px;
+  background: #fff1f3 !important;
+  color: #3f3f3f !important;
+}
+
+:host ::ng-deep .p-datepicker-title {
+  gap: 5px;
+}
+
+:host ::ng-deep .p-datepicker-title .p-datepicker-month,
+:host ::ng-deep .p-datepicker-title .p-datepicker-year,
+:host ::ng-deep .p-datepicker-title .p-datepicker-select-month,
+:host ::ng-deep .p-datepicker-title .p-datepicker-select-year {
+  padding: 5px 3px;
+  border-radius: 7px;
+  color: #3f3f3f !important;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem !important;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+:host ::ng-deep .p-datepicker-prev-button,
+:host ::ng-deep .p-datepicker-next-button {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  color: #e25a78 !important;
+}
+
+:host ::ng-deep .p-datepicker-prev-button:hover,
+:host ::ng-deep .p-datepicker-next-button:hover {
+  background: #ffffff !important;
+}
+
+:host ::ng-deep .p-datepicker-calendar {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0 3px;
+}
+
+:host ::ng-deep .p-datepicker-calendar th {
+  padding: 7px 2px !important;
+  color: #8b7d82 !important;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+:host ::ng-deep .p-datepicker-calendar td {
+  padding: 3px 2px !important;
   text-align: center;
-  font-weight: 500;
 }
 
+:host ::ng-deep .p-datepicker-calendar td > span {
+  width: 38px !important;
+  height: 38px !important;
+  margin: 0 auto;
+  border: 1px solid transparent;
+  border-radius: 12px !important;
+  background: transparent !important;
+  color: #4a4346 !important;
+  font-size: 0.92rem !important;
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+:host ::ng-deep .p-datepicker-calendar td > span:not(.p-highlight):hover {
+  background: #fff0f2 !important;
+  color: #d94672 !important;
+  transform: translateY(-1px);
+}
+
+:host ::ng-deep .p-datepicker-calendar td.p-datepicker-other-month > span {
+  color: #c9c1c4 !important;
+}
+
+:host ::ng-deep .p-datepicker-calendar td.p-datepicker-today > span:not(.p-highlight) {
+  border-color: #f3a1b1;
+  background: #ffffff !important;
+  color: #d94672 !important;
+  font-weight: 700;
+}
+
+:host ::ng-deep .p-datepicker-calendar td > span.p-highlight,
+:host ::ng-deep .p-datepicker-calendar td > span.p-datepicker-day-selected {
+  border-color: transparent;
+  background: linear-gradient(135deg, #ff728e 0%, #f78184 100%) !important;
+  box-shadow: 0 5px 12px rgb(247 129 132 / 35%);
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+:host ::ng-deep .p-datepicker-calendar td > span:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgb(247 129 132 / 20%) !important;
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 22px 16px 105px;
+  }
+
+  .section-title {
+    margin: 0 0 16px;
+    font-size: 20px;
+  }
+
+  .calendar-wrapper {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  :host ::ng-deep .p-datepicker-header {
+    padding: 8px 9px !important;
+  }
+
+  :host ::ng-deep .p-datepicker-calendar td > span {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 0.88rem !important;
+  }
+}

@@ -1,7 +1,13 @@
 <div class="table-container">
 
-  <div *ngIf="agendamentos.length === 0" class="empty-message">
-    Sem agendamentos ainda
+  <div
+    *ngIf="agendamentos.length === 0"
+    class="empty-message"
+    [class.empty-message--highlighted]="vazioDestacado"
+    role="status"
+  >
+    <i *ngIf="vazioDestacado" class="pi pi-calendar-times" aria-hidden="true"></i>
+    <span>Sem agendamentos ainda.</span>
   </div>
 
   <p-table
@@ -13,8 +19,8 @@
       <tr>
         <th>Nome</th>
         <th>Hora</th>
-        <th>Produto</th>
-        <th *ngIf="mostrarAcoes">Ações</th>
+        <th>Serviços</th>
+        <th *ngIf="mostrarAcoes" class="acoes-header">Ações</th>
       </tr>
     </ng-template>
 
@@ -25,18 +31,20 @@
         <td>{{ agendamento.servico }}</td>
 
         <td *ngIf="mostrarAcoes" class="acoes-cell">
-          <button
-            class="btn-edit"
-            (click)="clicouEditar(agendamento)"
-            title="Editar Agendamento">
-            <i class="pi pi-pencil"></i>
-          </button>
-          <button
-            class="btn-delete"
-            (click)="clicouDeletar(agendamento)"
-            title="Deletar Agendamento">
-            <i class="pi pi-trash"></i>
-          </button>
+          <div class="acoes-content">
+            <button
+              class="btn-edit"
+              (click)="clicouEditar(agendamento)"
+              title="Editar Agendamento">
+              <i class="pi pi-pencil"></i>
+            </button>
+            <button
+              class="btn-delete"
+              (click)="clicouDeletar(agendamento)"
+              title="Deletar Agendamento">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
         </td>
       </tr>
     </ng-template>

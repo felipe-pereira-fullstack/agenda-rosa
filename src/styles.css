@@ -2,12 +2,13 @@
 
 * {
   font-family: 'Crimson Text', serif;
+  box-sizing: border-box;
 }
 
 :root {
   /* Fontes */
   --fonte-principal: 'Crimson Text', serif;
-  --fonte-titulos: 'Roboto', serif
+  --fonte-titulos: 'Roboto', serif;
 
   /* Cores principais */
   --cor-primaria: #FF8383;
@@ -46,11 +47,19 @@
   --container-width: 1200px;
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
+}
 
- html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
 }
+
+body,
+app-root {
+  display: block;
+  width: 100%;
 }

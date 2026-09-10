@@ -1,18 +1,18 @@
 <app-header titulo="Início"></app-header>
 
-<!-- O main-content abraça o conteúdo para dar fundo branco e padding -->
 <div class="main-content">
-  
-  <!-- Título Dinâmico -->
-  <h2 class="section-title">Agendamentos de Hoje ({{ diaAtual }})</h2>
+  <section class="today-section">
+    <h2 class="section-title">Agendamentos de hoje <span>({{ diaAtual }})</span></h2>
+    <app-agendamentos-table
+      [agendamentos]="agendamentosDoDia"
+      [mostrarAcoes]="false"
+    ></app-agendamentos-table>
+  </section>
 
-  <!-- A sua Tabela -->
-  <app-agendamentos-table [agendamentos]="agendamentosDoDia" [mostrarAcoes]="false"></app-agendamentos-table>
-
-  <h2 class="section-title2">Dias Próximos</h2>
-
-  <app-mini-calendar></app-mini-calendar>
-
+  <section class="upcoming-section">
+    <h2 class="section-title section-title--upcoming">Agendamentos da semana</h2>
+    <app-mini-calendar></app-mini-calendar>
+  </section>
 </div>
 
 <app-footer></app-footer>

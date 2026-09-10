@@ -13,6 +13,7 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 registerLocaleData(localePt);
@@ -54,6 +55,7 @@ export const appConfig: ApplicationConfig = {
     }),
 
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ]
 };

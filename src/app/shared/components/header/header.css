@@ -16,6 +16,25 @@
   justify-content: flex-start;
 }
 
+.logo-button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.logo-button:focus-visible {
+  border-radius: 8px;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.logo-button:active {
+  transform: scale(0.96);
+}
+
 .header-logo {
   height: 65px;
   margin-top: 25px;
@@ -40,37 +59,201 @@
 
 /* --- MENU --- */
 .menu-container {
+  position: relative;
   flex: 1;
   display: flex;
   justify-content: flex-end;
 }
 
 .hamburger-btn {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.hamburger-btn .pi {
-  font-size: 1.8rem !important; 
+.hamburger-btn:hover {
+  background: rgb(255 255 255 / 15%);
 }
 
-.hamburger-btn:focus,
 .hamburger-btn:active {
+  transform: scale(0.94);
+}
+
+.hamburger-btn:focus {
   outline: none;
 }
 
-:host ::ng-deep .p-menu {
-  width: 150px !important;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-  border: none;
-  margin-top: 10px;
+.hamburger-btn:focus-visible {
+  border-color: #ffffff;
+  background: rgb(255 255 255 / 12%);
+}
+
+.hamburger-lines {
+  display: grid;
+  gap: 5px;
+  width: 25px;
+}
+
+.hamburger-lines span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.hamburger-lines span:nth-child(2) {
+  width: 19px;
+  margin-left: auto;
+}
+
+:host ::ng-deep .header-account-menu {
   right: 0 !important;
   left: auto !important;
+  width: 190px !important;
+  margin-top: 8px;
+  padding: 6px;
+  overflow: hidden;
+  border: 1px solid #f5d2d8 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 14px 35px rgb(82 35 48 / 18%) !important;
+}
+
+:host ::ng-deep .header-account-menu .p-menu-list {
+  display: grid;
+  gap: 3px;
+  padding: 0;
+}
+
+:host ::ng-deep .header-account-menu .p-menu-item-link {
+  padding: 11px 12px;
+  border-radius: 9px;
+  color: #554d51;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+}
+
+:host ::ng-deep .header-account-menu .p-menu-item-link:hover {
+  background: #fff0f2;
+  color: #d93f68;
+}
+
+:host ::ng-deep .header-account-menu .p-menu-item-icon {
+  color: #e65376;
+}
+
+:host ::ng-deep .logout-dialog {
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgb(82 35 48 / 24%);
+}
+
+:host ::ng-deep .logout-dialog .p-dialog-header {
+  padding: 22px 22px 8px;
+  background: #ffffff;
+  color: #3f3f3f;
+}
+
+:host ::ng-deep .logout-dialog .p-dialog-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .logout-dialog .p-dialog-content {
+  padding: 12px 22px 22px;
+  background: #ffffff;
+}
+
+.logout-confirmation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logout-confirmation p {
+  margin: 0;
+  color: #555057;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.logout-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffeaee;
+  color: #d93f68;
+  font-size: 1.1rem;
+}
+
+.logout-error {
+  margin: 12px 0 0;
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.logout-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.confirm-logout-button,
+.cancel-logout-button {
+  min-height: 46px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff3f7f 0%, #f78184 100%);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.confirm-logout-button {
+  background: linear-gradient(90deg, #d93f68 0%, #ed667d 100%);
+}
+
+.confirm-logout-button:hover,
+.confirm-logout-button:focus-visible,
+.cancel-logout-button:hover,
+.cancel-logout-button:focus-visible {
+  outline: none;
+  filter: brightness(0.97);
+}
+
+.confirm-logout-button:disabled,
+.cancel-logout-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .logout-dialog .p-dialog-header {
+    padding: 20px 20px 8px;
+  }
+
+  :host ::ng-deep .logout-dialog .p-dialog-content {
+    padding: 12px 20px 20px;
+  }
+
+  .logout-actions {
+    grid-template-columns: 1fr;
+  }
 }

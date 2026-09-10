@@ -172,21 +172,10 @@
   text-align: right;
 }
 
-.forgot-password-link {
-  padding: 0;
-  border: 0;
-  background: transparent;
+.forgot-password a {
   color: #3f3f3f;
-  font-family: inherit;
   font-size: 1rem;
-  cursor: pointer;
   text-decoration: none;
-}
-
-.forgot-password-link:hover,
-.forgot-password-link:focus-visible {
-  color: #f05f77;
-  text-decoration: underline;
 }
 
 /* ==================== BOTÃO DE LOGIN ==================== */

@@ -1,0 +1,85 @@
+<p-dialog
+  header="Recuperar senha"
+  [visible]="visible"
+  (visibleChange)="aoAlterarVisibilidade($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="!loading"
+  [closeOnEscape]="!loading"
+  [dismissableMask]="false"
+  [style]="{ width: 'min(430px, calc(100vw - 40px))' }"
+  appendTo="body"
+  styleClass="recovery-dialog"
+>
+  @if (!emailEnviado) {
+    <form class="recovery-form" [formGroup]="emailForm" (ngSubmit)="enviarLink()">
+      <div class="recovery-introduction">
+        <span class="recovery-icon" aria-hidden="true">
+          <i class="pi pi-envelope"></i>
+        </span>
+        <p>
+          Informe o e-mail cadastrado. Enviaremos um link para você criar uma nova senha.
+        </p>
+      </div>
+
+      <div class="field">
+        <p-floatlabel variant="on" class="float-field">
+          <i class="pi pi-at field-icon" aria-hidden="true"></i>
+          <input
+            id="email-recuperacao"
+            type="email"
+            pInputText
+            formControlName="email"
+            class="rounded-input"
+            autocomplete="email"
+          />
+          <label for="email-recuperacao">E-mail</label>
+        </p-floatlabel>
+
+        @if (tentouEnviar && emailForm.controls.email.invalid) {
+          <small class="field-error">Digite um endereço de e-mail válido.</small>
+        }
+      </div>
+
+      @if (mensagemErro) {
+        <p class="request-error" role="alert">{{ mensagemErro }}</p>
+      }
+
+      <div class="dialog-actions">
+        <button
+          pButton
+          type="submit"
+          label="Enviar link"
+          class="send-button"
+          [loading]="loading"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          class="cancel-button"
+          [disabled]="loading"
+          (click)="fechar()"
+        ></button>
+      </div>
+    </form>
+  } @else {
+    <div class="success-content" role="status">
+      <span class="success-icon" aria-hidden="true">
+        <i class="pi pi-check"></i>
+      </span>
+      <h2>Verifique seu e-mail</h2>
+      <p>
+        Se existir uma conta com esse endereço, você receberá um link para redefinir a senha.
+      </p>
+      <button
+        pButton
+        type="button"
+        label="Entendi"
+        class="send-button full-width"
+        (click)="fechar()"
+      ></button>
+    </div>
+  }
+</p-dialog>

@@ -1,17 +1,13 @@
 <div class="mini-calendar-container">
-
-  
   <div class="days-row">
-    <!-- Renderiza 1 botão para cada dia na lista -->
-    <button 
-      class="day-card" 
-      *ngFor="let dia of proximosDias" 
-      (click)="irParaAgendamentos(dia)">
-      
-      <span class="day-name">{{ dia.nomeDia }}</span>
+    <button
+      class="day-card"
+      *ngFor="let dia of proximosDias"
+      [attr.aria-label]="dia.nomeDia + ', dia ' + dia.numeroDia"
+      (click)="irParaAgendamentos(dia)"
+    >
       <span class="day-number">{{ dia.numeroDia }}</span>
-      
+      <span class="day-name">{{ dia.nomeDia }}</span>
     </button>
   </div>
-
 </div>

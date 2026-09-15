@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/images/logo-agenda-rosa.png" alt="Logotipo da Agenda Rosa" width="110">
+  <img src="docs/images/01-logo-agenda-rosa.png" alt="Logotipo da Agenda Rosa" width="110">
 </p>
 
 <h1 align="center">Agenda Rosa</h1>
@@ -46,19 +46,19 @@ O sistema surgiu como um projeto de extensão do curso de **Análise e Desenvolv
 
 | Antes | Atual |
 | :---: | :---: |
-| <img src="docs/images/login-antes.png" alt="Tela de acesso anterior" width="360"> | <img src="docs/images/login-atual.png" alt="Tela de acesso atual" width="360"> |
+| <img src="docs/images/02-login-antes.png" alt="Tela de acesso anterior" width="360"> | <img src="docs/images/03-login-depois.png" alt="Tela de acesso atual" width="360"> |
 
 ### Página inicial
 
 | Antes | Atual |
 | :---: | :---: |
-| <img src="docs/images/home-antes.png" alt="Página inicial anterior" width="360"> | <img src="docs/images/home-atual.png" alt="Página inicial atual" width="360"> |
+| <img src="docs/images/04-home-antes.png" alt="Página inicial anterior" width="360"> | <img src="docs/images/05-home-depois.png" alt="Página inicial atual" width="360"> |
 
 ### Calendário
 
 | Antes | Atual |
 | :---: | :---: |
-| <img src="docs/images/calendario-antes.png" alt="Calendário anterior" width="360"> | <img src="docs/images/calendario-atual.png" alt="Calendário atual" width="360"> |
+| <img src="docs/images/06-calendario-antes.png" alt="Calendário anterior" width="360"> | <img src="docs/images/07-calendario-depois.png" alt="Calendário atual" width="360"> |
 
 ## Principais telas
 
@@ -66,18 +66,18 @@ O sistema surgiu como um projeto de extensão do curso de **Análise e Desenvolv
 
 | Criação de conta | Recuperação de senha |
 | :---: | :---: |
-| <img src="docs/images/criacao-conta.png" alt="Tela de criação de conta" width="360"> | <img src="docs/images/recuperacao-senha.png" alt="Modal de recuperação de senha" width="360"> |
+| <img src="docs/images/08-criacao-conta.png" alt="Tela de criação de conta" width="360"> | <img src="docs/images/09-recuperacao-senha.png" alt="Modal de recuperação de senha" width="360"> |
 
 ### Agendamentos e serviços
 
 | Novo agendamento | Gerenciamento de serviços |
 | :---: | :---: |
-| <img src="docs/images/novo-agendamento.png" alt="Modal de novo agendamento" width="360"> | <img src="docs/images/servicos.png" alt="Tela de gerenciamento de serviços" width="360"> |
+| <img src="docs/images/10-modal-agendamento.png" alt="Modal de novo agendamento" width="360"> | <img src="docs/images/11-tela-servicos.png" alt="Tela de gerenciamento de serviços" width="360"> |
 
 ### Dashboard
 
 <p align="center">
-  <img src="docs/images/dashboard.png" alt="Dashboard de acompanhamento financeiro" width="380">
+  <img src="docs/images/12-tela-dashboard.png" alt="Dashboard de acompanhamento financeiro" width="380">
 </p>
 
 O dashboard apresenta o faturamento previsto, a quantidade de serviços realizados e a participação de cada serviço no período selecionado.

@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading: boolean = false;
   modalRecuperacaoVisivel = false;
-  readonly recuperacaoDisponivel = environment.useFirebaseAuthentication;
+  readonly recuperacaoDisponivel = environment.passwordRecoveryEnabled;
 
   private auth = inject(Auth);
   private firestore = inject(Firestore);

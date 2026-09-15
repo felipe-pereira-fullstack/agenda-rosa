@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  useFirebaseAuthentication: false
+  useFirebaseAuthentication: false,
+  passwordRecoveryEnabled: true
 };
